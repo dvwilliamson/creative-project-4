@@ -10,21 +10,40 @@
       <h1>A List of Things To Do</h1>
       <p v-show="activeItems.length === 0">You are done with all your tasks! Good job!</p>
       <form v-on:submit.prevent="addItem">
-	<input type="text" v-model="text">
-	<button type="submit">Add</button>
+        <input type="text" v-model="text">
+        <button type="submit">Add</button>
+        <br>
+        <br><label>Select Priority:</label>
+        <input type="radio" id="radone" value="1" v-model="picked">
+        <label for="one">One</label>
+        <input type="radio" id="radtwo" value="2" v-model="picked">
+        <label for="two">Two</label>
+        <input type="radio" id="radthree" value="3" v-model="picked">
+        <label for="three">Three</label>
+        <br>
       </form>
       <div class="controls">
-	<button v-on:click="showAll()">Show All</button>
-	<button v-on:click="showActive()">Show Active</button>
-	<button v-on:click="showCompleted()">Show Completed</button>
-	<button v-on:click="deleteCompleted()">Delete Completed</button>
+	      <button v-on:click="showAll()">Show All</button>
+	      <button v-on:click="showActive()">Show Active</button>
+	      <button v-on:click="showCompleted()">Show Completed</button>
+        <button v-on:click="sortByPriority()">Sort {{order}}</button>
+	      <button v-on:click="deleteCompleted()">Delete Completed</button>
       </div>
       <ul>
 	<li v-for="item in filteredItems" draggable="true" v-on:dragstart="dragItem(item)" v-on:dragover.prevent v-on:drop="dropItem(item)">
-	  <input type="checkbox" v-model="item.completed" v-on:click="completeItem(item)" /><label v-bind:class="{ completed: item.completed }">{{ item.text }}</label><button v-on:click="deleteItem(item)" class="delete">X</button>
+	  <input type="checkbox" v-model="item.completed" v-on:click="completeItem(item)" /><label v-bind:class="{ completed: item.completed }">
+    ({{item.priority}}) {{ item.text }}
+  </label>
+  <button v-on:click="increasePriority(item)" class="delete">▲</button>
+  <button v-on:click="decreasePriority(item)" class="delete">▼</button>
+  <button v-on:click="deleteItem(item)" class="delete">X</button>
 	</li>
       </ul>
     </div>
+    <div class='footer'>
+        <hr>
+        <a target='_blank' href='https://github.com/BYU-CS260-Winter-2018/lab-4-dvwilliamson'>View on Github</a>
+      </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js" integrity="sha256-pU9euBaEcVl8Gtg+FRYCtin2vKLN8sx5/4npZDmY2VA=" crossorigin="anonymous"></script>
     <script src="/script.js"></script>
